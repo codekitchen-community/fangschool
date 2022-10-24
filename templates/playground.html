@@ -9,24 +9,4 @@
 </ol>
 
 <p>这里是一个操场。操场上有很多人。</p>
-<div class="grid">
-    <a class="item" href="/"
-    style="width: 200px; height: 200px; background: grey">
-    <div class="item-content">
-        <p>Grey</p>
-        <p>一个爱好编程和写作的人。</p>
-        <img src="https://helloflask.com/totoro.gif" width="100px">
-    </div>
-</a>
-
-{% for student in students %}
-    {{ fang(
-        width=student.width,
-        height=student.height,
-        name=student.name,
-        color=student.color,
-        url='/',
-    ) }}
-{% endfor %}
-</div>
 {% endblock %}
