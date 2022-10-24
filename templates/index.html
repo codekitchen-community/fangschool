@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import fang %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light mt-3 mb-2">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">方学园</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/greyli/fangschool" target="_blank">GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">申请入学</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">返校</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">关于</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="alert alert-dismissible alert-warning">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <strong>校园建设中！</strong>请前往 <a href="#" class="alert-link">工地</a> 查看施工进度。
+</div>
+
+<div class="grid">
+    {{ fang(300, 400, '#20c997', '操场', '/playground') }}
+    {{ fang(100, 100, '#ffc107', '实验室', '/playground') }}
+    {{ fang(200, 200, '#343a40', '教学楼', '/playground') }}
+    {{ fang(300, 200, '#e83e8c', '学生宿舍', '/playground') }}
+    {{ fang(300, 300, '#17a2b8', '社团中心', '/playground') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+    {{ fang(100, 100, '#6f42c1', '工地', '/construction_site') }}
+</div>
+{% endblock %}
