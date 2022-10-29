@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<ol class="breadcrumb mt-3">
+    <li class="breadcrumb-item"><a href="/">方学园</a></li>
+    <li class="breadcrumb-item active">申请入学</li>
+</ol>
+
+<div class="row">
+    <div class="col-sm-12 col-lg-6 offset-lg-3">
+        <form method="post" name="registerForm">
+            <div class="mb-3">
+                <label for="username" class="form-label">用户名</label>
+                <input type="text" class="form-control" id="username" placeholder="greyli" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">姓名</label>
+                <input type="text" class="form-control" id="name" placeholder="Grey Li" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">邮箱</label>
+                <input type="email" class="form-control" id="email" placeholder="someone@example.com" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="pwd" class="form-label">密码</label>
+                <input type="password" class="form-control" id="pwd" placeholder="密码" name="pwd" required>
+            </div>
+            <div class="mb-3 row">
+                <label for="color" class="form-label">颜色</label>
+                <div class="col-6">
+                    <input type="color" class="form-control" id="color" name="color" onchange="return updateColor()" value="#86ff46" required>
+                </div>
+                <div class="col-6">
+                    <input type="text" class="form-control" name="colorhex" disabled readonly value="#86ff46">
+                </div>
+                <script>
+                    function updateColor() {
+                        hex = document.registerForm.color.value
+                        document.registerForm.colorhex.value = hex
+                    }
+                </script>
+            </div>
+            <div class="mb-3">
+                <label for="interest" class="form-label">爱好</label>
+                <input type="text" class="form-control" id="interest" placeholder="填写爱好" name="interest" required>
+            </div>
+            <input type="submit" class="btn btn-primary" value="提交">
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

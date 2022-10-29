@@ -29,3 +29,6 @@ wtforms==3.0.1
     # via bootstrap-flask
 zipp==3.10.0
     # via importlib-metadata
+flask-sqlalchemy==3.0.2
+flask-login==0.6.2
+authlib==1.1.0
