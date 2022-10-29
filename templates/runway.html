@@ -8,42 +8,33 @@
 </ol>
 
 <p>这里是一个跑道，你可以在这里跑步。</p>
-<div
-  class="border border-1 border-secondary rounded-pill"
-  style="width: 100%; height: 300px; padding: 25px; background-color: red"
->
-  <div
-    class="border border-1 rounded-pill"
-    style="
-      width: 100%;
-      height: 100%;
-      padding: 25px;
-      border-color: white;
-      border-style: dashed !important;
-    "
-  >
-    <div
-      class="border border-1 rounded-pill"
-      style="
-        width: 100%;
-        height: 100%;
-        padding: 25px;
-        border-color: white;
-        border-style: dashed !important;
-      "
-    >
-      <div
-        class="border border-1 rounded-pill"
-        style="
-          width: 100%;
-          height: 100%;
-          padding: 25px;
-          border-color: white;
-          background-color: green;
-        "
-      ></div>
+<div class="border border-1 border-secondary rounded-pill runway-border">
+  <div class="border border-1 rounded-pill dotted-border">
+    <div class="border border-1 rounded-pill dotted-border">
+      <div class="border border-1 rounded-pill dotted-border lawn"></div>
     </div>
   </div>
 </div>
 
+<style>
+  .runway-border {
+    width: 100%;
+    height: 300px;
+    padding: 25px;
+    background-color: red;
+  }
+
+  .dotted-border {
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+    border-color: white;
+    border-style: dashed !important;
+  }
+
+  .lawn {
+    border-style: solid !important;
+    background-color: green;
+  }
+</style>
 {% endblock %}
