@@ -18,3 +18,7 @@ def construction_site():
 @app.route('/playground')
 def playground():
     return render_template('playground.html')
+
+@app.route('/runway')
+def runway():
+    return render_template('runway.html')

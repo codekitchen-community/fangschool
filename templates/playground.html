@@ -1,12 +1,16 @@
-{% extends 'base.html' %}
-{% from 'macros.html' import fang %}
+{% extends 'base.html' %} {% from 'macros.html' import fang %} 
+
+
 
 {% block content %}
 
 <ol class="breadcrumb mt-3">
-    <li class="breadcrumb-item"><a href="/">方学园</a></li>
-    <li class="breadcrumb-item active">操场</li>
+  <li class="breadcrumb-item"><a href="/">方学园</a></li>
+  <li class="breadcrumb-item active">操场</li>
 </ol>
 
 <p>这里是一个操场。操场上有很多人。</p>
+<div class="grid">
+  {{ fang(300, 400, 'red', '跑道', '/runway') }}
+</div>
 {% endblock %}
