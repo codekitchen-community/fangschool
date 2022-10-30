@@ -19,6 +19,7 @@ def construction_site():
 def playground():
     return render_template('playground.html')
 
+
 @app.route('/library')
-def gymnasium():
+def library():
     return render_template('library.html')
