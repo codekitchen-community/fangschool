@@ -20,6 +20,11 @@ def playground():
     return render_template('playground.html')
 
 
+@app.route('/canteen')
+def canteen():
+    return render_template('canteen.html')
+
+
 @app.route('/runway')
 def runway():
     return render_template('runway.html')
