@@ -1,8 +1,76 @@
-from flask import Flask, render_template
+import os
+import sys
+from datetime import timedelta, datetime
+
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash
+
+basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+
+# SQLite URI compatible
+WIN = sys.platform.startswith('win')
+if WIN:
+    prefix = 'sqlite:///'
+else:
+    prefix = 'sqlite:////'
+
+
+class Config:
+    DEBUG = False
+    TESTING = False
+    SSL_REDIRECT = False
+
+    SECRET_KEY = os.getenv("SECRET_KEY", "hard-to-guess")
+
+    SQLALCHEMY_POOL_RECYCLE = 10
+    SQLQLCHEMY_POOL_SIZE = 30
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',
+                                        prefix + os.path.join(basedir, 'data.db'))
+
+    REMEMBER_COOKIE_DURATION = timedelta(days=14)
+
 
 app = Flask(__name__)
+app.config.from_object(Config)
 bootstrap = Bootstrap5(app)
+db = SQLAlchemy(app)
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+
+    username = db.Column(db.String(16))
+    name = db.Column(db.String(20))
+    password_hash = db.Column(db.String)
+    email = db.Column(db.String(256))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    remote_addr = db.Column(db.String)
+    color = db.Column(db.String(7))
+    verified = db.Column(db.Boolean)
+    capital = db.Column(db.String)
+
+    def __str__(self):
+        return f"<User '{self.username}'>"
+
+    def set_password(self, pwd):
+        pwd_hash = generate_password_hash(pwd)
+        self.password_hash = pwd_hash
+        db.session.commit()
+
+    def verify_password(self, pwd):
+        return check_password_hash(self.password_hash, pwd)
+
+    def gen_email_verify_token(self):
+        header = {"alg": "HS256"}
+        payload = {"uid": self.id, "email": self.email, "time": time()}
+        token = jwt.encode(header, payload, current_app.config["SECRET_KEY"]).decode(
+            "utf-8"
+        )
+        return token
 
 
 @app.route('/')
@@ -18,6 +86,34 @@ def construction_site():
 @app.route('/playground')
 def playground():
     return render_template('playground.html')
+
+
+@app.route('/register', methods=("GET", "POST",))
+def register():
+    if request.method == "POST":
+        f = request.form
+        username = f.get("username")
+        email = f.get("email")
+        name = f.get("name")
+        pwd = f.get("pwd")
+        color = f.get("color")
+        interest = f.get("interest")
+
+        u = User(
+            username=username,
+            email=email,
+            name=name,
+            color=color,
+            interest=interest,
+            remote_addr=remote_addr,
+            verified=False,
+            capital="10000.0",
+        )
+        u.set_password(pwd)
+        db.session.add(u)
+        db.session.commit()
+
+    return render_template('register.html')
 
 
 @app.route('/canteen')
