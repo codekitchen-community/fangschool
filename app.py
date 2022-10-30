@@ -1,12 +1,12 @@
+import os
+import sys
+from datetime import timedelta, datetime
+
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-from datetime import timedelta, datetime
 from werkzeug.security import generate_password_hash
-import os, sys
-
-app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -16,6 +16,7 @@ if WIN:
     prefix = 'sqlite:///'
 else:
     prefix = 'sqlite:////'
+
 
 class Config:
     DEBUG = False
@@ -33,13 +34,11 @@ class Config:
     REMEMBER_COOKIE_DURATION = timedelta(days=14)
 
 
+app = Flask(__name__)
 app.config.from_object(Config)
 bootstrap = Bootstrap5(app)
+db = SQLAlchemy(app)
 
-db = SQLAlchemy()
-db.init_app(app)
-
-basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -48,15 +47,10 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(20))
     password_hash = db.Column(db.String)
     email = db.Column(db.String(256))
-
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-
     remote_addr = db.Column(db.String)
-
     color = db.Column(db.String(7))
-
     verified = db.Column(db.Boolean)
-
     capital = db.Column(db.String)
 
     def __str__(self):
@@ -105,20 +99,33 @@ def register():
         color = f.get("color")
         interest = f.get("interest")
 
-        u = User()
-        u.username = username
-        u.email = email
-        u.name = name
-        u.color = color
-        u.interest = interest
+        u = User(
+            username=username,
+            email=email,
+            name=name,
+            color=color,
+            interest=interest,
+            remote_addr=remote_addr,
+            verified=False,
+            capital="10000.0",
+        )
         u.set_password(pwd)
-
-        u.remote_addr = request.remote_addr
-        u.verified = False
-
-        u.capital = "10000.0"
-
         db.session.add(u)
         db.session.commit()
 
     return render_template('register.html')
+
+
+@app.route('/canteen')
+def canteen():
+    return render_template('canteen.html')
+
+
+@app.route('/runway')
+def runway():
+    return render_template('runway.html')
+
+
+@app.route('/library')
+def library():
+    return render_template('library.html')
